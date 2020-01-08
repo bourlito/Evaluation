@@ -52,11 +52,10 @@ public class Traitement {
                 for (Cell cell: row){
 
                     switch (cell.getCellType()){
-                        default:
                         case STRING:
                             mapRow.put(cell, cell.getStringCellValue());
                             break;
-                        case NUMERIC:
+                        case NUMERIC: case FORMULA:
                             mapRow.put(cell, String.valueOf(cell.getNumericCellValue()));
                             break;
                     }
@@ -91,7 +90,7 @@ public class Traitement {
             for (Row row: mapSheet.keySet()){
                 Employe employe = employes.get(row.getRowNum());
 
-                if (!row.getCell(Column.COL_NOM).getStringCellValue().equalsIgnoreCase(employe.getNom()))
+                if (row.getCell(Column.COL_NOM).getStringCellValue().equalsIgnoreCase(employe.getNom()))
                     setStats(employe, mapSheet.get(row), sheet.getSheetName());
                 else employe.setErreur(true);
             }
